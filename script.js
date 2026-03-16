@@ -45,26 +45,64 @@ getPostTitle(1).then(obj => console.log(obj)).catch(error => console.error(error
 
 
 
-const getPost = (id) => {
-    return fetch(`https://dummyjson.com/posts/${id}`)
-        .then(res => res.json())
-        .then(post => {
-            return fetch(`https://dummyjson.com/users/${post.userId}`)
-                .then(res => res.json())
-                .then(user => {
-                    return {
-                        user: user,
-                        Post: post,
-                    }
-                })
-        })
+// const getPost = (id) => {
+//     return fetch(`https://dummyjson.com/posts/${id}`)
+//         .then(res => res.json())
+//         .then(post => {
+//             return fetch(`https://dummyjson.com/users/${post.userId}`)
+//                 .then(res => res.json())
+//                 .then(user => {
+//                     return {
+//                         user: user,
+//                         Post: post,
+//                     }
+//                 })
+//         })
 
-}
+// }
 
-getPost(1).then(obj => console.log(obj)).catch(error => console.error(error))
+// getPost(1).then(obj => console.log(obj)).catch(error => console.error(error))
 
 
 
 // Crea la funzione lanciaDado() che restituisce una Promise che, dopo 3 secondi, genera un numero casuale tra 1 e 6. Tuttavia, nel 20% dei casi, il dado si "incastra" e la Promise va in reject.
 // 🎯 Bonus: HOF con closure per memorizzare l'ultimo lancio
 // Modifica la funzione in creaLanciaDado(), che restituisce una closure che memorizza l'ultimo risultato. Se il numero esce due volte di fila, stampa "Incredibile!".
+
+function creaLanciaDado() {
+    let risultato = 0;
+    return function lanciaDado  ()  {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const num = Math.floor(Math.random() * 6) + 1;
+            const probabilita = Math.random()
+
+            if (probabilita < 0.2) {
+                reject("Dado incastrato")
+            } else {
+                if (num === risultato){
+                    resolve("Incledibile")
+                }else {
+                    resolve(num)
+                }
+                risultato = num ;
+
+            }
+        }, 3000);
+
+
+    })
+};
+}
+
+const lancio = creaLanciaDado();
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+lancio().then(console.log).catch(console.log)
+// lanciaDado().then((risultato)=>{console.log("Risultato:",risultato)}).catch((erro)=>{console.log("Errore:",erro)})
